@@ -109,6 +109,25 @@ export default {
         // call create customer
         this.createCustomer(data);
       }
+    },
+
+    onSearch(id) {
+
+      var search1 = this.form;
+      console.log(id)
+      console.log(search1)
+      for ( var i = 1; i < this.customers.length; i++ ) {
+        if(this.customers[i].id === id) {
+          search1.id = this.customers[i].id;
+          search1.first_name = this.customers[i].first_name;
+          search1.last_name = this.customers[i].last_name;
+          search1.email = this.customers[i].email;
+        }
+      }
+      console.log(search1)
+      alert("Name: " + search1.first_name + " " + search1.last_name
+        + "\nEmail: " + search1.email
+      );
     }
   },
 };

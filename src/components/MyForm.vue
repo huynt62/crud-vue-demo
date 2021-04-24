@@ -7,8 +7,7 @@
                     type="text" 
                     name="id" 
                     placeholder="ID"
-                    @change="handleChange"
-                    :value="form.id"
+                    v-model="form.id"
                   />
               </div>
               <div class="tow wide field">
@@ -22,8 +21,7 @@
                     type="text" 
                     name="first_name" 
                     placeholder="First Name"
-                    @change="handleChange"
-                    :value="form.first_name"
+                    v-model="form.first_name"
                   />
               </div>
 
@@ -33,19 +31,17 @@
                     type="text" 
                     name="last_name" 
                     placeholder="Last Name"
-                    @change="handleChange"
-                    :value="form.last_name"
+                    v-model="form.last_name"
                   />
               </div>
 
               <div class="six wide field">
-                  <label>First Name</label>
+                  <label>Email</label>
                   <input 
                     type="email" 
                     name="email" 
                     placeholder="joe@gmail.com"
-                    @change="handleChange"
-                    :value="form.email"
+                    v-model="form.email"
                   />
               </div>
               
@@ -63,7 +59,8 @@ export default {
   data() {
       return {
           btnSaveName: "Save",
-          btnClass: "ui primary button submit-button"
+          btnClass: "ui primary button submit-button",
+
       };
   },
   props: {
@@ -72,20 +69,19 @@ export default {
       }
   },
   methods: {
-      handleChange(event) {
-          const { name, value } = event.target;
-          let form = this.form;
-          form[name] = value;
-          this.form = form;
-      },
-
       onSearch(event) {
           //prevent search
           event.preventDefault();
 
-          if (document.getElementsByName("id")[0].value === "") {
+          if (this.form.id !== "") {
+              this.$emit("onSearch", this.form.id);
+          } else {
               alert("Enter id");
           }
+          console.log(this.form.id)
+
+          //clear
+          this.clearFormFields();
       },
 
       onFormSubmit(event) {
@@ -108,19 +104,19 @@ export default {
 
       formValidation() {
           //first name
-          if (document.getElementsByName("first_name")[0].value === "") {
+          if (this.form.first_name === "") {
               alert("Enter first name");
               return false;
           }
 
           //last name 
-          if (document.getElementsByName("last_name")[0].value === "") {
+          if (this.form.last_name === "") {
               alert("Enter last name");
               return false;
           }
 
           //email
-          if (document.getElementsByName("email")[0].value === "") {
+          if (this.form.email === "") {
               alert("Enter email");
               return false
           }
@@ -129,6 +125,7 @@ export default {
       },
       clearFormFields() {
           //clear form data
+          this.form.id = "";
           this.form.first_name = "";
           this.form.last_name = "";
           this.form.email = "";
