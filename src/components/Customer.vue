@@ -26,6 +26,7 @@ export default {
     onEdit() {
       // window.console.log("customer edit " + this.customer);
       this.$emit("onEdit", this.customer);
+      
     }
   }
 };

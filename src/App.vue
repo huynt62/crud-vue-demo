@@ -7,13 +7,18 @@
     </div>
 
     <div class="ui main container">
-      <MyForm :form="form" @onFormSubmit="onFormSubmit" />
+      <MyForm
+        :form="form" 
+        @onSearch="onSearch"
+        @onFormSubmit="onFormSubmit"
+      />
       <Loader v-if="loader" />
       <CustomerList 
         :customers="customers"
         @onDelete="onDelete"
         @onEdit="onEdit"
       />
+      <View/>
     </div>
   </div>
 </template>
@@ -48,7 +53,8 @@ export default {
         {id: 12, first_name: 'Nguyen Van', last_name: 'D', email: 'emailD@gmail.com'},
         {id: 13, first_name: 'Nguyen Van', last_name: 'D', email: 'emailD@gmail.com'},
       ],
-      form: { first_name: "", last_name: "", email: "", isEdit: false },
+      textSearch: {querySearch: ""},
+      form: {first_name: "", last_name: "", email: "", isEdit: false , textSearch: null},
       loader: false
     }
   },
@@ -77,17 +83,27 @@ export default {
       this.loader = false;
     },
     editCustomer(data) {
-      this.loader = true;
-      console.log(this.customers[this.customers.indexOf(data.id)])
+      
+      
       var customer1 = {
         id: data.id,
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.emai
       };
-    
-      console.log(this.customers[this.customers.indexOf(data.id)])
-      this.customers[this.customers.indexOf(data.id)] = customer1;
+
+      this.loader = true;
+
+      for(var i = 0; i < this.customers.length; i ++) {
+        if(this.customers[i].id === data.id) {
+          this.customers[i].id = customer1.id;
+          this.customers[i].first_name = customer1.first_name;
+          this.customers[i].last_name = customer1.last_name;
+          this.customers[i].email = customer1.email;
+          break;
+        }
+      }
+
       this.loader = false;
     },
     onDelete(id) {
@@ -98,6 +114,7 @@ export default {
       // window.console.log("app edit ", data);
       this.form = data;
       this.form.isEdit = true;
+      
     },
     onFormSubmit(data) {
       // window.console.log("app onFormSubmit", data);
@@ -111,23 +128,34 @@ export default {
       }
     },
 
-    onSearch(id) {
+    onSearch() {
+      
+      /*console.log(textSearch)
 
-      var search1 = this.form;
-      console.log(id)
-      console.log(search1)
-      for ( var i = 1; i < this.customers.length; i++ ) {
-        if(this.customers[i].id === id) {
-          search1.id = this.customers[i].id;
-          search1.first_name = this.customers[i].first_name;
-          search1.last_name = this.customers[i].last_name;
-          search1.email = this.customers[i].email;
-        }
-      }
-      console.log(search1)
-      alert("Name: " + search1.first_name + " " + search1.last_name
-        + "\nEmail: " + search1.email
+      var filter2 = [];
+      filter2 = this.customers.filter(obj => 
+        obj.first_name == textSearch | 
+        obj.last_name == textSearch | 
+        obj.email == textSearch |
+        obj.id == textSearch
       );
+
+      //var b = this.customers;
+      //alert(filter2.id);
+      this.customers = filter2;*/
+
+      if(this.form.textSearch){
+      return this.customers.filter((item)=>{
+        return this.form.textSearch.toLowerCase().split(' ').every(v => 
+              item.first_name.toLowerCase().includes(v)|
+              item.last_name.toLowerCase().includes(v) |
+              item.email.toLowerCase().includes(v) 
+            )
+      })
+      }else{
+        return this.customers;
+      }
+
     }
   },
 };

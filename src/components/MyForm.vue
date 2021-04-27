@@ -2,16 +2,16 @@
   <div class="my-form">
       <form class="ui form">
           <div class="fields">
-              <div class="three wide field">
+              <div class="six wide field">
                   <input 
                     type="text" 
-                    name="id" 
-                    placeholder="ID"
-                    v-model="form.id"
+                    name="text search" 
+                    placeholder="Text Search"
+                    v-model="form.textSearch"
                   />
               </div>
               <div class="tow wide field">
-                  <button class="ui primary button search-button" @click="onSearch">Search</button>
+                  <button class="ui primary button search-button" @click.prevent="onSearch">Search</button>
               </div>
           </div>
           <div class="fields">
@@ -46,7 +46,7 @@
               </div>
               
               <div class="three wide field">
-                  <button :class="btnClass" @click="onFormSubmit">{{ btnSaveName }}</button>
+                  <button :class="btnClass" @click.prevent="onFormSubmit">{{ btnSaveName }}</button>
               </div>
           </div>
       </form>
@@ -60,6 +60,7 @@ export default {
       return {
           btnSaveName: "Save",
           btnClass: "ui primary button submit-button",
+          
 
       };
   },
@@ -69,31 +70,30 @@ export default {
       }
   },
   methods: {
-      onSearch(event) {
-          //prevent search
-          event.preventDefault();
+      onSearch() {
 
-          if (this.form.id !== "") {
-              this.$emit("onSearch", this.form.id);
+          if (this.form.textSearch !== "") {
+              this.$emit("onSearch", this.form.textSearch);
           } else {
-              alert("Enter id");
+              alert("Enter text search");
           }
-          console.log(this.form.id)
+
+          //change the button
+          this.btnSearchName = "Search";
+          console.log(this.form.textSearch)
 
           //clear
-          this.clearFormFields();
+          //this.textSearch = "";
       },
 
-      onFormSubmit(event) {
-          //prevent form submit
-          event.preventDefault();
+      onFormSubmit() {
 
           //form validation
           if (this.formValidation()) {
               //window.console.log("ready to tsubmit")
               this.$emit("onFormSubmit", this.form);
 
-              //change the buttn to save 
+              //change the button to save 
               this.btnSaveName = "Save";
               this.btnClass = "ui primary buttn submit-button";
 
@@ -141,7 +141,7 @@ export default {
           this.btnSaveName = "Update";
           this.btnClass = "ui orange button submit-button";
       }
-  }
+  },
 
 }
 </script>
