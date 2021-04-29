@@ -13,7 +13,7 @@
 
               <tbody>
                   <Customer 
-                    v-for="customer in customers" 
+                    v-for="customer in onSearch" 
                     :key="customer.id" 
                     :customer="customer"
                     @onDelete="onDelete"
@@ -33,9 +33,9 @@ export default {
     Customer
   },
   props: {
-    customers: {
+    onSearch: {
       type: Array
-    }
+    },
   },
 
   methods: {

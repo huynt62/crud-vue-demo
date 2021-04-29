@@ -2,16 +2,13 @@
   <div class="my-form">
       <form class="ui form">
           <div class="fields">
-              <div class="six wide field">
-                  <input 
+              <div class="search-wrapper panel-heading col-sm-12">
+                  <input class="form-control"
                     type="text" 
                     name="text search" 
                     placeholder="Text Search"
                     v-model="textSearch"
                   />
-              </div>
-              <div class="tow wide field">
-                  <button class="ui primary button search-button" @click.prevent="onSearch">Search</button>
               </div>
           </div>
           <div class="fields">
@@ -60,14 +57,13 @@ export default {
       return {
           btnSaveName: "Save",
           btnClass: "ui primary button submit-button",
-          textSearch: ""
-
       };
   },
   props: {
       form: {
-          type: Object
-      }
+          type: Object,
+      },
+      textSearch: null
   },
   methods: {
       onSearch() {

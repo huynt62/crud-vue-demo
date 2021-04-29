@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr >
         <td>{{ customer.id }}</td>
         <td>{{ customer.first_name }} {{ customer.last_name }}</td>
         <td>{{ customer.email }}</td>

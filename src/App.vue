@@ -9,12 +9,13 @@
     <div class="ui main container">
       <MyForm
         :form="form" 
+        :textSearch="textSearch"
         @onSearch="onSearch"
         @onFormSubmit="onFormSubmit"
       />
       <Loader v-if="loader" />
       <CustomerList 
-        :customers="customers"
+        :onSearch="onSearch"
         @onDelete="onDelete"
         @onEdit="onEdit"
       />
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      textSearch: null,
       customers: [
         {id: 1, first_name: 'Nguyen Van', last_name: 'A', email: 'emailA@gmail.com'},
         {id: 2, first_name: 'Nguyen Van', last_name: 'B', email: 'emailB@gmail.com'},
@@ -54,10 +56,35 @@ export default {
         {id: 13, first_name: 'Nguyen Van', last_name: 'D', email: 'emailD@gmail.com'},
       ],
       form: {first_name: "", last_name: "", email: "", isEdit: false},
-      loader: false
+      loader: false,
     }
   },
 
+  computed:{
+    onSearch() {
+      /*console.log(this.textSearch)
+      console.log(this.customers.filter((item)=>{
+        return this.textSearch.toLowerCase().split(' ').every(v => 
+              item.first_name.toLowerCase().includes(v)||
+              item.last_name.toLowerCase().includes(v) ||
+              item.email.toLowerCase().includes(v) 
+            )
+      }))*/
+      console.log(this.customers)
+
+      if(this.textSearch){
+      return this.customers.filter((item)=>{
+        return this.textSearch.toLowerCase().split(' ').every(v => 
+              item.first_name.toLowerCase().includes(v)||
+              item.last_name.toLowerCase().includes(v) ||
+              item.email.toLowerCase().includes(v) 
+            )
+      })
+      }else{
+        return this.customers;
+      }
+    }
+  },
 
   methods: {
     deleteCustomer(id) {
@@ -126,23 +153,6 @@ export default {
         this.createCustomer(data);
       }
     },
-
-    onSearch(textSearch) {
-      console.log(textSearch.toLowerCase().split(' '))
-
-      if(textSearch != ""){
-      return this.customers.filter((item)=>{
-        return textSearch.toLowerCase().split(' ').every(v => 
-              item.first_name.toLowerCase().includes(v)|
-              item.last_name.toLowerCase().includes(v) |
-              item.email.toLowerCase().includes(v) 
-            )
-      })
-      }else{
-        return this.customers;
-      }
-
-    }
   },
 };
 </script>
