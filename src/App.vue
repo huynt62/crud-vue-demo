@@ -29,6 +29,7 @@
 import MyForm from "./components/MyForm";
 import CustomerList from "./components/CustomerList";
 import Loader from "./components/Loader";
+import Vue from 'vue';
 
 export default {
   name: 'App',
@@ -89,7 +90,7 @@ export default {
   methods: {
     deleteCustomer(id) {
       this.loader = true;
-      
+
       var filter1 = [];
       filter1 = this.customers.filter(obj => obj.id !== id);
       this.customers = filter1;
@@ -98,7 +99,7 @@ export default {
     },
     createCustomer(data) {
       this.loader = true;
-      
+
       this.customers.push({
           id: this.customers[this.customers.length - 1].id +1,
           first_name: data.first_name,
@@ -112,7 +113,7 @@ export default {
     editCustomer(data) {
       this.loader = true;
       //this.form.isEdit = false;
-      
+
       var customer1 = {
         id: Number(data.id),
         first_name: String(data.first_name),
@@ -124,12 +125,11 @@ export default {
       for(var i = 0; i < this.customers.length; i ++) {
         if(this.customers[i].id === customer1.id) {
           this.customers[i] = customer1;
-          this.form.isEdit = false;
+          Vue.set(this.customers)
           break;
         }
       }
-      console.log(this.customers)
-      
+      console.log(this.form.isEdit)
       this.loader = false;
     },
     onDelete(id) {
@@ -141,7 +141,6 @@ export default {
       this.form = data;
       console.log(this.form)
       this.form.isEdit = true;
-      
     },
     onFormSubmit(data) {
       // window.console.log("app onFormSubmit", data);

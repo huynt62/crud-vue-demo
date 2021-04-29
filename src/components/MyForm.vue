@@ -11,6 +11,7 @@
                   />
               </div>
           </div>
+
           <div class="fields">
               <div class="four wide field">
                   <label>First Name</label>
@@ -41,7 +42,7 @@
                     v-model="form.email"
                   />
               </div>
-              
+
               <div class="three wide field">
                   <button :class="btnClass" @click.prevent="onFormSubmit">{{ btnSaveName }}</button>
               </div>
@@ -63,9 +64,7 @@ export default {
       form: {
           type: Object,
       },
-      textSearch: {
-          type: Text,
-      }
+      textSearch: null
   },
   methods: {
       onFormSubmit() {
@@ -113,6 +112,9 @@ export default {
           this.form.last_name = "";
           this.form.email = "";
           this.form.isEdit = false;
+
+          // clear form fields
+          document.querySelector(".form").reset();
       }
   },
 
