@@ -63,27 +63,19 @@ export default {
       form: {
           type: Object,
       },
-      textSearch: null
+      textSearch: {
+          type: Text,
+      }
   },
   methods: {
-      onSearch() {
-
-          if (this.textSearch !== "") {
-              this.$emit("onSearch", this.textSearch);
-          } else {
-              alert("Enter text search");
-          }
-
-          //clear
-          //this.textSearch = "";
-      },
-
       onFormSubmit() {
           console.log(this.form)
           //form validation
           if (this.formValidation()) {
               //window.console.log("ready to tsubmit")
               this.$emit("onFormSubmit", this.form);
+
+              console.log(this.form)
 
               //change the button to save 
               this.btnSaveName = "Save";

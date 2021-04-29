@@ -70,7 +70,7 @@ export default {
               item.email.toLowerCase().includes(v) 
             )
       }))*/
-      console.log(this.customers)
+      console.log(typeof(this.textSearch))
 
       if(this.textSearch){
       return this.customers.filter((item)=>{
@@ -105,6 +105,7 @@ export default {
           last_name: data.last_name,
           email: data.email
       });
+      console.log(this.customers)
 
       this.loader = false;
     },
@@ -123,10 +124,10 @@ export default {
       for(var i = 0; i < this.customers.length; i ++) {
         if(this.customers[i].id === customer1.id) {
           this.customers[i] = customer1;
+          this.form.isEdit = false;
           break;
         }
       }
-      console.log(customer1)
       console.log(this.customers)
       
       this.loader = false;
