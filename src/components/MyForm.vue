@@ -7,7 +7,7 @@
                     type="text" 
                     name="text search" 
                     placeholder="Text Search"
-                    v-model="form.textSearch"
+                    v-model="textSearch"
                   />
               </div>
               <div class="tow wide field">
@@ -60,7 +60,7 @@ export default {
       return {
           btnSaveName: "Save",
           btnClass: "ui primary button submit-button",
-          
+          textSearch: ""
 
       };
   },
@@ -72,22 +72,18 @@ export default {
   methods: {
       onSearch() {
 
-          if (this.form.textSearch !== "") {
-              this.$emit("onSearch", this.form.textSearch);
+          if (this.textSearch !== "") {
+              this.$emit("onSearch", this.textSearch);
           } else {
               alert("Enter text search");
           }
-
-          //change the button
-          this.btnSearchName = "Search";
-          console.log(this.form.textSearch)
 
           //clear
           //this.textSearch = "";
       },
 
       onFormSubmit() {
-
+          console.log(this.form)
           //form validation
           if (this.formValidation()) {
               //window.console.log("ready to tsubmit")
@@ -125,14 +121,10 @@ export default {
       },
       clearFormFields() {
           //clear form data
-          this.form.id = "";
           this.form.first_name = "";
           this.form.last_name = "";
           this.form.email = "";
           this.form.isEdit = false;
-
-          //clear form fields
-          document.querySelector(".form").reset();
       }
   },
 

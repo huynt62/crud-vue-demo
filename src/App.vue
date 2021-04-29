@@ -53,8 +53,7 @@ export default {
         {id: 12, first_name: 'Nguyen Van', last_name: 'D', email: 'emailD@gmail.com'},
         {id: 13, first_name: 'Nguyen Van', last_name: 'D', email: 'emailD@gmail.com'},
       ],
-      textSearch: {querySearch: ""},
-      form: {first_name: "", last_name: "", email: "", isEdit: false , textSearch: null},
+      form: {first_name: "", last_name: "", email: "", isEdit: false},
       loader: false
     }
   },
@@ -83,27 +82,26 @@ export default {
       this.loader = false;
     },
     editCustomer(data) {
-      
+      this.loader = true;
+      //this.form.isEdit = false;
       
       var customer1 = {
-        id: data.id,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        email: data.emai
-      };
-
-      this.loader = true;
+        id: Number(data.id),
+        first_name: String(data.first_name),
+        last_name: String(data.last_name),
+        email: String(data.email)
+      }
+      console.log(customer1)
 
       for(var i = 0; i < this.customers.length; i ++) {
-        if(this.customers[i].id === data.id) {
-          this.customers[i].id = customer1.id;
-          this.customers[i].first_name = customer1.first_name;
-          this.customers[i].last_name = customer1.last_name;
-          this.customers[i].email = customer1.email;
+        if(this.customers[i].id === customer1.id) {
+          this.customers[i] = customer1;
           break;
         }
       }
-
+      console.log(customer1)
+      console.log(this.customers)
+      
       this.loader = false;
     },
     onDelete(id) {
@@ -113,6 +111,7 @@ export default {
     onEdit(data) {
       // window.console.log("app edit ", data);
       this.form = data;
+      console.log(this.form)
       this.form.isEdit = true;
       
     },
@@ -128,25 +127,12 @@ export default {
       }
     },
 
-    onSearch() {
-      
-      /*console.log(textSearch)
+    onSearch(textSearch) {
+      console.log(textSearch.toLowerCase().split(' '))
 
-      var filter2 = [];
-      filter2 = this.customers.filter(obj => 
-        obj.first_name == textSearch | 
-        obj.last_name == textSearch | 
-        obj.email == textSearch |
-        obj.id == textSearch
-      );
-
-      //var b = this.customers;
-      //alert(filter2.id);
-      this.customers = filter2;*/
-
-      if(this.form.textSearch){
+      if(textSearch != ""){
       return this.customers.filter((item)=>{
-        return this.form.textSearch.toLowerCase().split(' ').every(v => 
+        return textSearch.toLowerCase().split(' ').every(v => 
               item.first_name.toLowerCase().includes(v)|
               item.last_name.toLowerCase().includes(v) |
               item.email.toLowerCase().includes(v) 
