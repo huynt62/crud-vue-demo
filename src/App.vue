@@ -122,7 +122,7 @@ export default {
 
       for(var i = 0; i < this.customers.length; i ++) {
         if(this.customers[i].id === customer1.id) {
-          //not used:  this.customers[i] = customer1;
+          //should not used:  this.customers[i] = customer1;
           this.customers.splice(i,1,customer1);
           break;
         }
