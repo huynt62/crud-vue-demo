@@ -68,13 +68,10 @@ export default {
   },
   methods: {
       onFormSubmit() {
-          console.log(this.form)
           //form validation
           if (this.formValidation()) {
               //window.console.log("ready to tsubmit")
               this.$emit("onFormSubmit", this.form);
-
-              console.log(this.form)
 
               //change the button to save 
               this.btnSaveName = "Save";

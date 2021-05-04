@@ -29,7 +29,7 @@
 import MyForm from "./components/MyForm";
 import CustomerList from "./components/CustomerList";
 import Loader from "./components/Loader";
-import Vue from 'vue';
+//import Vue from 'vue';
 
 export default {
   name: 'App',
@@ -112,7 +112,6 @@ export default {
     },
     editCustomer(data) {
       this.loader = true;
-      //this.form.isEdit = false;
 
       var customer1 = {
         id: Number(data.id),
@@ -120,16 +119,14 @@ export default {
         last_name: String(data.last_name),
         email: String(data.email)
       }
-      console.log(customer1)
 
       for(var i = 0; i < this.customers.length; i ++) {
         if(this.customers[i].id === customer1.id) {
-          this.customers[i] = customer1;
-          Vue.set(this.customers)
+          //not used:  this.customers[i] = customer1;
+          this.customers.splice(i,1,customer1);
           break;
         }
       }
-      console.log(this.form.isEdit)
       this.loader = false;
     },
     onDelete(id) {
@@ -139,7 +136,6 @@ export default {
     onEdit(data) {
       // window.console.log("app edit ", data);
       this.form = data;
-      console.log(this.form)
       this.form.isEdit = true;
     },
     onFormSubmit(data) {
